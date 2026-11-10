@@ -1,0 +1,425 @@
+/* =====================================================================
+   Scholar's Wyvern: shared stylesheet
+   ---------------------------------------------------------------------
+   Every page links to this one file, so a change here changes the
+   whole site. It has three parts:
+
+   1. DESIGN TOKENS: the named colours, fonts and sizes from the
+      Scholar's Wyvern design system. Change a token, and everything
+      that uses it updates.
+   2. BASE STYLES: the defaults for plain HTML (body text, headings,
+      links).
+   3. COMPONENTS: reusable pieces shared by pages (header, footer,
+      buttons, cards, chips).
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. DESIGN TOKENS
+   Copied from the Scholar's Wyvern design system (tokens.css).
+   Write them as var(--name) elsewhere, e.g. color: var(--ink);
+   --------------------------------------------------------------------- */
+
+/* Brand palette: use these through the "role" tokens below, not directly */
+:root {
+  --wyvern-indigo: #2a1b8f;
+  --wyvern-violet: #8a3fd6;
+  --wyvern-teal: #00acc8;
+  --wyvern-seafoam: #5fd9c8;
+  --wyvern-lime: #a3f063;
+  --wyvern-gold: #f2b954;
+  --wyvern-gold-deep: #8a5a12;
+
+  /* Spacing runs on a 4px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* Soft corners */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Fonts (loaded from Google Fonts in each page's <head>) */
+  --font-display: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+  --font-text: Alegreya, Georgia, "Times New Roman", serif;
+  --font-ui: "Alegreya Sans", "Gill Sans", system-ui, sans-serif;
+
+  /* The widest the content gets, so lines don't stretch across big screens */
+  --page-width: 1040px;
+}
+
+/* Parchment theme: the light theme, used for the main reading areas */
+:root,
+.theme-parchment {
+  --surface: #f8f5ee;          /* page background */
+  --surface-raised: #ffffff;   /* cards */
+  --surface-sunken: #efe9dd;   /* "coming soon" cards, wells */
+  --hairline: #ddd5ea;         /* thin decorative lines */
+  --control-border: #8f86b0;   /* outlines on chips and inputs */
+  --ink: #1c1340;              /* main text */
+  --ink-muted: #574e7a;        /* secondary text */
+  --brand-deep: var(--wyvern-indigo);
+  --on-brand-deep: #ffffff;
+  --action: var(--wyvern-indigo);
+  --on-action: #ffffff;
+  --link: var(--wyvern-violet);
+  --link-hover: var(--wyvern-indigo);
+  --highlight: var(--wyvern-lime);
+  --on-highlight: #0d042e;
+  --magic: var(--wyvern-teal);
+  --gilt: var(--wyvern-gold-deep);
+  --focus-ring: var(--wyvern-violet);
+  --shadow-card: 0 1px 2px rgba(28, 19, 64, 0.10), 0 8px 24px rgba(42, 27, 143, 0.10);
+  --shadow-glow: 0 0 24px rgba(138, 63, 214, 0.25);
+}
+
+/* Night theme: the dark, starry theme, used for heroes and footers.
+   Add class="theme-night" to any section to switch it to Night. */
+.theme-night {
+  --surface: #0d042e;
+  --surface-raised: #1a0f4a;
+  --surface-sunken: #08021f;
+  --hairline: #3a2d78;
+  --control-border: #6a5ca8;
+  --ink: #f1edff;
+  --ink-muted: #b9b0dc;
+  --brand-deep: var(--wyvern-violet);
+  --on-brand-deep: #ffffff;
+  --action: var(--wyvern-seafoam);
+  --on-action: #0d042e;
+  --link: var(--wyvern-seafoam);
+  --link-hover: #f1edff;
+  --highlight: var(--wyvern-lime);
+  --on-highlight: #0d042e;
+  --magic: var(--wyvern-teal);
+  --gilt: var(--wyvern-gold);
+  --focus-ring: var(--wyvern-lime);
+  --shadow-card: 0 0 0 1px #3a2d78, 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 28px rgba(95, 217, 200, 0.35);
+
+  background: var(--surface);
+  color: var(--ink);
+}
+
+
+/* ---------------------------------------------------------------------
+   2. BASE STYLES
+   --------------------------------------------------------------------- */
+
+/* Makes width and padding add up the way you'd expect */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 28px;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 64px;
+  line-height: 64px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 600;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+/* Smaller headline on phones, so long titles don't overflow */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 44px;
+    line-height: 48px;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Links are always underlined (a design system rule: it helps people
+   who can't easily tell colours apart) */
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+/* The visible outline when someone moves around the page with the
+   Tab key. Never remove it: keyboard users rely on it. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* For people who've asked their device for less animation */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ---------------------------------------------------------------------
+   3. COMPONENTS
+   --------------------------------------------------------------------- */
+
+/* Centres content and keeps it from getting too wide */
+.container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+/* Small capitals label above a heading, e.g. "THE SHELVES" */
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--link);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Intro paragraph under a page title */
+.lead {
+  font-size: 20px;
+  line-height: 32px;
+  max-width: 620px;
+}
+
+/* --- Site header ------------------------------------------------------ */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+  padding: var(--space-4) 0;
+}
+
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.site-header .wordmark img {
+  height: 56px;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+/* The page you're on: dark text with a gold underline */
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom: 2px solid var(--gilt);
+  padding-bottom: 2px;
+}
+
+/* Sections that don't exist yet: shown, but not clickable */
+.site-nav .soon {
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* --- Hero (the big dark intro band at the top of a page) -------------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-16) 0;
+}
+
+/* The soft teal-to-violet glow behind Quill */
+.glow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-4);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(0, 172, 200, 0.38) 0%,
+    rgba(138, 63, 214, 0.28) 38%,
+    rgba(13, 4, 46, 0) 68%);
+}
+
+/* Twinkling four-point stars */
+.sparkle {
+  position: absolute;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* --- Buttons ---------------------------------------------------------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px; /* big enough to tap on a phone */
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--action);
+  color: var(--on-action);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.button:hover {
+  color: var(--on-action);
+  box-shadow: var(--shadow-glow);
+}
+
+/* --- Cards ------------------------------------------------------------ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-8);
+}
+
+.card {
+  background: var(--surface-raised);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* The one featured card on a page gets the wing glow */
+.card--featured {
+  box-shadow: var(--shadow-glow), var(--shadow-card);
+}
+
+/* A section that isn't built yet */
+.card--soon {
+  background: var(--surface-sunken);
+  box-shadow: none;
+}
+
+.card--soon p {
+  color: var(--ink-muted);
+}
+
+.card p {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* --- Chips (small rounded labels) ------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-self: flex-start;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--control-border);
+  color: var(--ink-muted);
+}
+
+.chip--new {
+  background: var(--highlight);
+  color: var(--on-highlight);
+  border-color: var(--highlight);
+}
+
+/* --- Site footer ------------------------------------------------------ */
+.site-footer {
+  padding: var(--space-8) 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ink-muted);
+}
+
+.site-footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.site-footer .emblem {
+  width: 56px;
+  height: 56px;
+}
