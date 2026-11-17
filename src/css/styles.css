@@ -646,7 +646,7 @@ mark.placeholder {
   font-weight: 700;
 }
 
-.portion-calc input {
+.portion-calc input[type="number"] {
   width: 4.5em;
   min-height: 44px;
   padding: 0 var(--space-2);
@@ -682,7 +682,7 @@ mark.placeholder {
   color: var(--on-action);
 }
 
-.portion-calc input:focus-visible {
+.portion-calc input[type="number"]:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
@@ -720,4 +720,52 @@ mark.placeholder {
     box-shadow: none;
     border: 1px solid #999999;
   }
+}
+
+/* --- Measurement toggle (inside the portion calculator) ------------------ */
+.measure-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.measure-toggle legend {
+  float: left; /* keeps the legend on the same flow as the options */
+  width: 100%;
+  margin-bottom: var(--space-2);
+  font-weight: 700;
+}
+
+/* Each option looks like a button, but is a real radio for keyboards and
+   screen readers */
+.measure-toggle label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.measure-toggle input {
+  accent-color: var(--action);
+  margin: 0;
+}
+
+.measure-toggle label:has(input:checked) {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+  font-weight: 700;
+}
+
+.measure-toggle label:has(input:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }

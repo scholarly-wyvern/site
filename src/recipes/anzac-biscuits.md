@@ -11,6 +11,7 @@ makes:
 prep: "[Placeholder: e.g. 15 min]"
 cook: 20 min
 oven: 150°C
+measures: au           # cups and spoons are Australian (20 ml tablespoon)
 
 tags: [baking, biscuits, vegetarian]
 

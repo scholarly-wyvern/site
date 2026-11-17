@@ -6,6 +6,7 @@
 
 import { formatAmount, formatUnit, SCALE_RULES } from "./src/js/scale.js";
 import recipeTags from "./src/_data/recipeTags.json" with { type: "json" };
+import ingredientWeights from "./src/_data/ingredientWeights.json" with { type: "json" };
 
 // Set SHOW_DRAFTS=1 (the "npm run preview" command does) to see draft
 // recipes while working on them. The published site never includes them.
@@ -31,6 +32,19 @@ export default function (eleventyConfig) {
     return text.replace(/\[Placeholder:[^\]]*\]/g, (match) => `<mark class="placeholder">${match}</mark>`);
   });
 
+  // Marks oven temperatures ("150°C") so the US view can show °F instead
+  eleventyConfig.addFilter("temperatures", (text) => {
+    if (typeof text !== "string") return text;
+    return text.replace(/(\d{2,3})\s?°C/g, '<span data-temp-c="$1">$1°C</span>');
+  });
+
+  // How heavy an ingredient is, for the measurement toggle. A value on the
+  // ingredient line wins over the shared table in ingredientWeights.json.
+  eleventyConfig.addFilter("ingredientInfo", (ingredient) => {
+    const shared = ingredientWeights[(ingredient.item || "").toLowerCase()] ?? {};
+    return { gPerMl: ingredient.gPerMl ?? shared.gPerMl, liquid: ingredient.liquid ?? shared.liquid };
+  });
+
   // --- Recipe checks -----------------------------------------------------
   // These run before each recipe is built. If something's wrong, the build
   // stops with a plain-English message, so mistakes can't reach the live site.
@@ -44,6 +58,10 @@ export default function (eleventyConfig) {
 
     if (typeof data.makes?.amount !== "number") {
       problems.push('"makes: amount" must be a number, e.g. 4');
+    }
+
+    if (data.measures && !["au", "us", "metric"].includes(data.measures)) {
+      problems.push('"measures" must be au, us or metric');
     }
 
     for (const tag of data.tags) {

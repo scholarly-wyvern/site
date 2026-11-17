@@ -23,6 +23,7 @@ makes:
 prep: 15 min           # optional
 cook: 30 min           # optional
 oven: 180°C            # optional
+measures: au           # au / us / metric: which cups and spoons the recipe uses (Australian tbsp = 20 ml)
 
 # Tags must come from the list in src/_data/recipeTags.json
 tags: [mains, vegetarian]
@@ -34,6 +35,8 @@ tags: [mains, vegetarian]
 #   whole: rounded to a whole number, e.g. eggs
 #   none:  never changes, e.g. a pinch of salt
 # Leave "amount" out entirely for things like "salt and pepper, to taste".
+# Unit conversions use the weights in src/_data/ingredientWeights.json. For an
+# ingredient that isn't listed, add gPerMl (grams per ml), e.g. gPerMl: 0.6
 ingredients:
   - group: For the sauce          # optional heading; leave out if only one group
     items:

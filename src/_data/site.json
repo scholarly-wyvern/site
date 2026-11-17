@@ -1,6 +1,8 @@
 {
   "title": "Scholar's Wyvern",
   "description": "A gathering place for friends, players and family: guides for the table, recipes from the kitchen, books worth sharing and crafts to try.",
+  "defaultMeasures": "au",
+  "measureNames": { "au": "Australian", "us": "US", "metric": "metric" },
   "nav": [
     { "label": "Home", "url": "/" },
     { "label": "D&D", "url": "/dnd/", "soon": true },

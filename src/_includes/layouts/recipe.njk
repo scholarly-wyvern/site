@@ -19,7 +19,7 @@ layout: layouts/base.njk
         <div><dt>{{ "Makes" if makes.verb == "makes" else "Serves" }}</dt><dd>{{ makes.amount }} {{ makes.unit }}{% if makes.note %} {{ makes.note | placeholders | safe }}{% endif %}</dd></div>
         {% if prep %}<div><dt>Prep</dt><dd>{{ prep | placeholders | safe }}</dd></div>{% endif %}
         {% if cook %}<div><dt>Cook</dt><dd>{{ cook | placeholders | safe }}</dd></div>{% endif %}
-        {% if oven %}<div><dt>Oven</dt><dd>{{ oven }}</dd></div>{% endif %}
+        {% if oven %}<div><dt>Oven</dt><dd>{{ oven | temperatures | safe }}</dd></div>{% endif %}
       </dl>
 
       {% set visibleTags = tags | reject("equalto", "recipe") %}
@@ -36,7 +36,8 @@ layout: layouts/base.njk
       <h2 id="ingredients-heading">Ingredients</h2>
 
       {#- The portion calculator. Hidden until recipe.js switches it on. -#}
-      <div class="portion-calc" data-portion-calc data-base="{{ makes.amount }}" data-unit="{{ makes.unit }}" hidden>
+      {%- set measures = measures or site.defaultMeasures %}
+      <div class="portion-calc" data-portion-calc data-base="{{ makes.amount }}" data-unit="{{ makes.unit }}" data-measures="{{ measures }}" hidden>
         <div class="portion-calc__row">
           <label for="portion-yield">{{ "Makes" if makes.verb == "makes" else "Serves" }}</label>
           <button type="button" class="portion-calc__step" data-less aria-label="Fewer">−</button>
@@ -49,6 +50,13 @@ layout: layouts/base.njk
           <button type="button" class="portion-calc__quick" data-factor="{{ factor[0] }}" aria-pressed="{{ 'true' if factor[0] == '1' else 'false' }}">{{ factor[1] }}</button>
           {% endfor %}
         </div>
+        <fieldset class="measure-toggle">
+          <legend>Measurements</legend>
+          <label><input type="radio" name="measures" value="original" checked> As written ({{ site.measureNames[measures] }})</label>
+          {% if measures != "us" %}<label><input type="radio" name="measures" value="us"> US cups</label>{% endif %}
+          {% if measures != "metric" %}<label><input type="radio" name="measures" value="metric"> Metric (grams)</label>{% endif %}
+        </fieldset>
+        <p class="portion-calc__note" data-convert-note hidden>Converted amounts are close, not exact. The original measurements are the most accurate.</p>
         {% if scalingNote %}<p class="portion-calc__note" data-scale-note hidden>{{ scalingNote | placeholders | safe }}</p>{% endif %}
         <p class="visually-hidden" data-status aria-live="polite"></p>
       </div>
@@ -57,7 +65,8 @@ layout: layouts/base.njk
         {% if group.group %}<h3>{{ group.group }}</h3>{% endif %}
         <ul class="ingredient-list">
           {% for i in group.items %}
-          <li{% if i.amount is defined %} data-amount="{{ i.amount }}" data-unit="{{ i.unit }}" data-scale="{{ i.scale or 'scale' }}"{% endif %}>
+          {%- set info = i | ingredientInfo %}
+          <li{% if i.amount is defined %} data-amount="{{ i.amount }}" data-unit="{{ i.unit }}" data-scale="{{ i.scale or 'scale' }}"{% if info.gPerMl %} data-g-per-ml="{{ info.gPerMl }}"{% endif %}{% if info.liquid %} data-liquid{% endif %}{% endif %}>
             {% if i.amount is defined %}<span class="ingredient-qty"><span data-qty>{{ i.amount | amount(i.unit) }}</span>{% if i.unit %} <span data-unit-label>{{ i.unit | unitLabel(i.amount) }}</span>{% endif %}</span>{% endif %}
             <span class="ingredient-item">{{ i.item }}</span>
             {%- if i.note %}<span class="ingredient-note">, {{ i.note | placeholders | safe }}</span>{% endif %}
@@ -69,7 +78,7 @@ layout: layouts/base.njk
 
     <section class="recipe-method" aria-labelledby="method-heading">
       <h2 id="method-heading">Method</h2>
-      {{ content | placeholders | safe }}
+      {{ content | placeholders | temperatures | safe }}
 
       {% for tip in tips %}{{ quillTip(tip) }}{% endfor %}
     </section>
