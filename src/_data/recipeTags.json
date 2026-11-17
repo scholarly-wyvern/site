@@ -1,0 +1,16 @@
+{
+  "_about": "The agreed recipe tags. A recipe can only use tags listed here, so near-duplicates (vegan / Vegan / plant-based) can't split the list. To add a tag, add a line: \"slug\": \"Label shown on the site\".",
+  "baking": "Baking",
+  "biscuits": "Biscuits & cookies",
+  "breakfast": "Breakfast",
+  "mains": "Mains",
+  "sides": "Sides",
+  "soups": "Soups",
+  "desserts": "Desserts",
+  "snacks": "Snacks",
+  "drinks": "Drinks",
+  "vegetarian": "Vegetarian",
+  "vegan": "Vegan",
+  "gluten-free": "Gluten-free",
+  "dairy-free": "Dairy-free"
+}

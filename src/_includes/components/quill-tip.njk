@@ -1,0 +1,16 @@
+{#- Quill's tip: a short, friendly piece of advice from Quill.
+    Reusable anywhere on the site:
+      {% from "components/quill-tip.njk" import quillTip %}
+      {{ quillTip("Your tip here") }}
+    Keep them to one or two per page, or they turn into noise.
+    The ✦ is a stand-in until the small Quill image is ready
+    (see asset-list.md: "Quill, small, for tips"). -#}
+{% macro quillTip(text) %}
+<aside class="quill-tip" aria-label="Quill's tip">
+  <span class="quill-tip__mark" aria-hidden="true">✦</span>
+  <div>
+    <p class="quill-tip__label">Quill's tip</p>
+    <p>{{ text | placeholders | safe }}</p>
+  </div>
+</aside>
+{% endmacro %}

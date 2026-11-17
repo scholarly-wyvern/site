@@ -1,0 +1,32 @@
+---
+layout: layouts/base.njk
+title: Recipes
+description: Recipes from the kitchen, for friends and family.
+eleventyExcludeFromCollections: true
+---
+{#- The Recipes landing page. It lists every published recipe automatically:
+    add a recipe file and it appears here, no editing needed. -#}
+<section class="container page-intro">
+  <p class="eyebrow">The kitchen shelf</p>
+  <h1>Recipes</h1>
+  <p class="lead">[Placeholder: a sentence or two introducing the recipes.]</p>
+</section>
+
+<section class="container page-section">
+  {% set recipes = collections.recipe | sort(false, false, "data.title") %}
+  {% if recipes | length %}
+  <ul class="card-grid recipe-cards">
+    {% for recipe in recipes %}
+    <li>
+      <a class="card" href="{{ recipe.url }}">
+        <h2 class="card__title">{{ recipe.data.title }}</h2>
+        {% if recipe.data.draft %}<span class="chip chip--new">Draft</span>{% endif %}
+        <p>{{ "Makes" if recipe.data.makes.verb == "makes" else "Serves" }} {{ recipe.data.makes.amount }} {{ recipe.data.makes.unit }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>Recipes are on their way. Quill is still taste-testing.</p>
+  {% endif %}
+</section>

@@ -1,0 +1,7 @@
+# Built website: GitHub rebuilds it on every publish, so it isn't stored
+_site/
+
+# Eleventy's tools, downloaded by "npm install": huge and re-downloadable
+node_modules/
+
+.DS_Store

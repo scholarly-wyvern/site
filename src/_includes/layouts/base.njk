@@ -1,0 +1,48 @@
+<!doctype html>
+{#- The shared frame for every page: <head>, header, footer.
+    Pages only supply their own content; this file wraps it.
+    Change the header or footer here, and every page updates. -#}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title and title != site.title %}{{ title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+
+  {#- Link previews (WhatsApp, Facebook, etc.): title, summary and image -#}
+  <meta property="og:title" content="{{ title or site.title }}">
+  <meta property="og:description" content="{{ description or site.description }}">
+  {% if image %}<meta property="og:image" content="{{ image }}">{% endif %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Alegreya+Sans:wght@500;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="wordmark" href="/">{{ site.title }}</a>
+      <nav class="site-nav" aria-label="Main">
+        {%- for item in site.nav %}
+          {%- if item.soon %}
+          <span class="soon">{{ item.label }} (coming soon)</span>
+          {%- else %}
+          <a href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
+          {%- endif %}
+        {%- endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer theme-night">
+    <div class="container">
+      <p>{{ site.title }} · guarded by Quill</p>
+    </div>
+  </footer>
+</body>
+</html>

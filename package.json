@@ -1,0 +1,23 @@
+{
+  "name": "scholars-wyvern-site",
+  "version": "1.0.0",
+  "description": "Scholar's Wyvern personal site",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "preview": "SHOW_DRAFTS=1 eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scholarly-wyvern/site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scholarly-wyvern/site/issues"
+  },
+  "homepage": "https://github.com/scholarly-wyvern/site#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8"
+  },
+  "private": true,
+  "type": "module"
+}

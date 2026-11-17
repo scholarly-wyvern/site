@@ -1,0 +1,79 @@
+---
+layout: layouts/base.njk
+---
+{#- The recipe template. Every recipe file in src/recipes/ is laid out by
+    this one file, so a design change here updates every recipe at once.
+    The recipe's own details (title, ingredients…) come from the top of
+    its .md file; the method comes from the text underneath. -#}
+{% from "components/quill-tip.njk" import quillTip %}
+
+<article class="recipe">
+  <header class="recipe-hero theme-night">
+    <div class="container">
+      <p class="eyebrow"><a href="/recipes/">Recipes</a></p>
+      <h1>{{ title }}</h1>
+      {% if description %}<p class="lead">{{ description | placeholders | safe }}</p>{% endif %}
+      {% if draft %}<p class="chip chip--new">Draft: not published</p>{% endif %}
+
+      <dl class="recipe-facts">
+        <div><dt>{{ "Makes" if makes.verb == "makes" else "Serves" }}</dt><dd>{{ makes.amount }} {{ makes.unit }}{% if makes.note %} {{ makes.note | placeholders | safe }}{% endif %}</dd></div>
+        {% if prep %}<div><dt>Prep</dt><dd>{{ prep | placeholders | safe }}</dd></div>{% endif %}
+        {% if cook %}<div><dt>Cook</dt><dd>{{ cook | placeholders | safe }}</dd></div>{% endif %}
+        {% if oven %}<div><dt>Oven</dt><dd>{{ oven }}</dd></div>{% endif %}
+      </dl>
+
+      {% set visibleTags = tags | reject("equalto", "recipe") %}
+      {% if visibleTags | length %}
+      <ul class="recipe-tags" aria-label="Tags">
+        {% for tag in visibleTags %}<li class="chip">{{ recipeTags[tag] }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="container recipe-body">
+    <section class="recipe-ingredients" aria-labelledby="ingredients-heading">
+      <h2 id="ingredients-heading">Ingredients</h2>
+
+      {#- The portion calculator. Hidden until recipe.js switches it on. -#}
+      <div class="portion-calc" data-portion-calc data-base="{{ makes.amount }}" data-unit="{{ makes.unit }}" hidden>
+        <div class="portion-calc__row">
+          <label for="portion-yield">{{ "Makes" if makes.verb == "makes" else "Serves" }}</label>
+          <button type="button" class="portion-calc__step" data-less aria-label="Fewer">−</button>
+          <input id="portion-yield" type="number" min="1" step="1" inputmode="numeric" value="{{ makes.amount }}">
+          <button type="button" class="portion-calc__step" data-more aria-label="More">+</button>
+          <span>{{ makes.unit }}</span>
+        </div>
+        <div class="portion-calc__row" role="group" aria-label="Quick sizes">
+          {% for factor in [["0.5", "½×"], ["1", "1×"], ["2", "2×"], ["3", "3×"]] %}
+          <button type="button" class="portion-calc__quick" data-factor="{{ factor[0] }}" aria-pressed="{{ 'true' if factor[0] == '1' else 'false' }}">{{ factor[1] }}</button>
+          {% endfor %}
+        </div>
+        {% if scalingNote %}<p class="portion-calc__note" data-scale-note hidden>{{ scalingNote | placeholders | safe }}</p>{% endif %}
+        <p class="visually-hidden" data-status aria-live="polite"></p>
+      </div>
+
+      {% for group in ingredients %}
+        {% if group.group %}<h3>{{ group.group }}</h3>{% endif %}
+        <ul class="ingredient-list">
+          {% for i in group.items %}
+          <li{% if i.amount is defined %} data-amount="{{ i.amount }}" data-unit="{{ i.unit }}" data-scale="{{ i.scale or 'scale' }}"{% endif %}>
+            {% if i.amount is defined %}<span class="ingredient-qty"><span data-qty>{{ i.amount | amount(i.unit) }}</span>{% if i.unit %} <span data-unit-label>{{ i.unit | unitLabel(i.amount) }}</span>{% endif %}</span>{% endif %}
+            <span class="ingredient-item">{{ i.item }}</span>
+            {%- if i.note %}<span class="ingredient-note">, {{ i.note | placeholders | safe }}</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </section>
+
+    <section class="recipe-method" aria-labelledby="method-heading">
+      <h2 id="method-heading">Method</h2>
+      {{ content | placeholders | safe }}
+
+      {% for tip in tips %}{{ quillTip(tip) }}{% endfor %}
+    </section>
+  </div>
+</article>
+
+<script type="module" src="/js/recipe.js"></script>

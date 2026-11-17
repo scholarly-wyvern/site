@@ -423,3 +423,301 @@ button:focus-visible {
   width: 56px;
   height: 56px;
 }
+
+/* --- Helpers ------------------------------------------------------------ */
+
+/* Hidden on screen but still read out by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Text-only wordmark, a stand-in until the logo image is in images/ */
+.site-header .wordmark {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Simple page intro and section spacing (landing pages) */
+.page-intro {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-8);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.page-section {
+  padding-bottom: var(--space-16);
+}
+
+.card__title {
+  font-size: 26px;
+  line-height: 32px;
+}
+
+/* "[Placeholder: …]" text in drafts: bright, so gaps are hard to miss */
+mark.placeholder {
+  background: var(--highlight);
+  color: var(--on-highlight);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-1);
+  font-family: var(--font-ui);
+  font-size: 0.85em;
+}
+
+/* --- Quill's tip --------------------------------------------------------- */
+.quill-tip {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface-raised);
+  border-left: 4px solid var(--magic);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+/* Stand-in for the small Quill image */
+.quill-tip__mark {
+  flex: none;
+  font-size: 28px;
+  line-height: 28px;
+  color: var(--magic);
+}
+
+.quill-tip__label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--link);
+}
+
+/* --- Recipes: landing page ---------------------------------------------- */
+.recipe-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-cards .card {
+  height: 100%;
+}
+
+/* --- Recipes: a recipe page ---------------------------------------------- */
+.recipe-hero {
+  padding: var(--space-12) 0;
+}
+
+.recipe-hero .container {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Keep chips (e.g. "Draft") their natural width, not full width */
+.recipe-hero .chip {
+  justify-self: start;
+}
+
+/* Makes / Prep / Cook / Oven */
+.recipe-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-12);
+  margin: var(--space-2) 0 0;
+}
+
+.recipe-facts dt {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.recipe-facts dd {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.recipe-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ingredients beside the method on wide screens, stacked on phones */
+.recipe-body {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 2fr;
+  gap: var(--space-12);
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-16);
+}
+
+@media (max-width: 760px) {
+  .recipe-body {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.recipe-body h2 {
+  margin-bottom: var(--space-4);
+}
+
+.recipe-body h3 {
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+.ingredient-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredient-list li {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.ingredient-qty {
+  font-weight: 700;
+}
+
+.ingredient-note {
+  color: var(--ink-muted);
+}
+
+.recipe-method ol {
+  margin: 0;
+  padding-left: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.recipe-method li::marker {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--gilt);
+}
+
+/* --- Portion calculator --------------------------------------------------- */
+.portion-calc {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui);
+  font-size: 15px;
+}
+
+.portion-calc[hidden] {
+  display: none;
+}
+
+.portion-calc__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.portion-calc label {
+  flex-basis: 100%; /* own line, so the controls fit narrow columns */
+  font-weight: 700;
+}
+
+.portion-calc input {
+  width: 4.5em;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+}
+
+.portion-calc button {
+  min-width: 44px;
+  min-height: 44px; /* big enough to tap with floury fingers */
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.portion-calc button:hover {
+  border-color: var(--action);
+}
+
+/* The size currently chosen */
+.portion-calc__quick[aria-pressed="true"] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--on-action);
+}
+
+.portion-calc input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.portion-calc__note {
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* --- Printing a recipe ------------------------------------------------------ */
+/* Just the recipe on paper: no menus, buttons or dark backgrounds */
+@media print {
+  .site-header,
+  .site-footer,
+  .portion-calc,
+  .recipe-tags {
+    display: none !important;
+  }
+
+  .recipe-hero.theme-night {
+    --surface: #ffffff;
+    --ink: #000000;
+    --ink-muted: #333333;
+    --link: #000000;
+    padding: 0 0 var(--space-4);
+  }
+
+  .recipe-body {
+    grid-template-columns: 1fr 2fr;
+    padding-top: var(--space-4);
+  }
+
+  .quill-tip {
+    box-shadow: none;
+    border: 1px solid #999999;
+  }
+}
