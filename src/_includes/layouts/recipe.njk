@@ -14,6 +14,12 @@ layout: layouts/base.njk
       <p class="eyebrow"><a href="/recipes/">Recipes</a></p>
       <h1>{{ title }}</h1>
       {% if description %}<p class="lead">{{ description | placeholders | safe }}</p>{% endif %}
+      {% if source %}
+      <p class="recipe-source">
+        {%- if sourceUrl %}<a href="{{ sourceUrl }}">{{ source | placeholders | safe }}</a>
+        {%- else %}{{ source | placeholders | safe }}{% endif -%}
+      </p>
+      {% endif %}
       {% if draft %}<p class="chip chip--new">Draft: not published</p>{% endif %}
 
       <dl class="recipe-facts">
@@ -75,11 +81,21 @@ layout: layouts/base.njk
           {% endfor %}
         </ul>
       {% endfor %}
+
+      {#- Equipment: only shown if the recipe lists any -#}
+      {% if equipment and equipment | length %}
+      <section class="recipe-equipment" aria-labelledby="equipment-heading">
+        <h2 id="equipment-heading">You'll need</h2>
+        <ul>
+          {% for item in equipment %}<li>{{ item | placeholders | safe }}</li>{% endfor %}
+        </ul>
+      </section>
+      {% endif %}
     </section>
 
     <section class="recipe-method" aria-labelledby="method-heading">
       <h2 id="method-heading">Method</h2>
-      {{ content | placeholders | temperatures(ovenType) | safe }}
+      {{ content | watchCallouts | placeholders | temperatures(ovenType) | safe }}
 
       {#- Storing: only shown if the recipe file has at least one of these -#}
       {% if storage or keeps or freezing %}

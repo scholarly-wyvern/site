@@ -808,3 +808,51 @@ mark.placeholder {
 .recipe-storage dd {
   margin: 0;
 }
+
+/* --- Recipes: source line, equipment, "Watch:" callouts -------------------- */
+.recipe-source {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.recipe-equipment {
+  margin-top: var(--space-8);
+}
+
+.recipe-equipment h2 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.recipe-equipment ul {
+  margin: 0;
+  padding-left: var(--space-6);
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* A pressure point inside a step: its own line, so it's spotted at a glance */
+.watch {
+  display: block;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-sunken);
+  border-left: 3px solid var(--link);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.watch__label {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  color: var(--link);
+}
+
+@media print {
+  .watch {
+    border-left-color: #000000;
+  }
+}

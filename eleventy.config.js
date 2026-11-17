@@ -32,6 +32,16 @@ export default function (eleventyConfig) {
     return text.replace(/\[Placeholder:[^\]]*\]/g, (match) => `<mark class="placeholder">${match}</mark>`);
   });
 
+  // "Watch:" in a method step becomes a highlighted callout, so pressure
+  // points stand out without making the step longer.
+  //   3. Cook the syrup until it starts to colour. Watch: it burns quickly.
+  eleventyConfig.addFilter("watchCallouts", (text) => {
+    if (typeof text !== "string") return text;
+    // Runs from "Watch:" to the end of the step (keeping any *italics* etc.)
+    return text.replace(/Watch:\s*([\s\S]*?)(?=<\/li>|<\/p>|$)/g,
+      '<span class="watch"><span class="watch__label">Watch:</span> $1</span>');
+  });
+
   // Marks oven temperatures ("150°C") so they can be shown for the reader's
   // oven: fan-forced or conventional, °C or °F. "detailed" shows both oven
   // types (used for the Oven line at the top of a recipe).
@@ -92,7 +102,8 @@ export default function (eleventyConfig) {
 
     if (!data.draft) {
       const text = JSON.stringify([data.title, data.description, data.makes, data.prep, data.cook,
-        data.ingredients, data.scalingNote, data.tips, data.storage, data.keeps, data.freezing]) + content;
+        data.ingredients, data.scalingNote, data.tips, data.storage, data.keeps, data.freezing,
+        data.source, data.equipment]) + content;
       if (text.includes("[Placeholder")) {
         problems.push('it still has "[Placeholder: …]" text. Fill those in or delete them, or set "draft: true"');
       }

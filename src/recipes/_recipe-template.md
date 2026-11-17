@@ -14,6 +14,10 @@ title: Recipe Name
 description: "One or two sentences that appear under the title and in link previews."
 draft: true
 
+# Optional: where the recipe comes from. sourceUrl is optional too.
+source: "Adapted from The Book Name, 1952"
+# sourceUrl: "https://example.com"
+
 makes:
   verb: serves         # "serves" for meals, "makes" for biscuits, cakes, loaves
   amount: 4            # a number: the portion calculator starts from it
@@ -52,6 +56,12 @@ ingredients:
 # Shown when someone changes the portions: what doesn't scale simply
 scalingNote: "Use a bigger pan for a double batch. Cooking time stays about the same."
 
+# Equipment: optional. Only list things someone might not have
+# (a sugar thermometer, a 20 cm springform tin), not every bowl and spoon.
+equipment:
+  - 20 cm springform tin
+  - Sugar thermometer
+
 # Storing: all optional. Leave out any you don't need; if all three are
 # left out, the "Storing" section doesn't appear on the page at all.
 storage: "Airtight container at room temperature."
@@ -63,5 +73,5 @@ tips:
   - "A short, useful tip."
 ---
 
-1. First step of the method.
-2. Second step.
+1. First step of the method. One short, clear sentence.
+2. Second step. Watch: anything after "Watch:" becomes a highlighted pressure point.

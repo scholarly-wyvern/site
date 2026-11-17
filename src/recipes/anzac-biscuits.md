@@ -2,6 +2,7 @@
 title: Anzac Biscuits
 description: "[Placeholder: one or two sentences about these biscuits, e.g. where the recipe comes from or why people keep asking for it.]"
 draft: true
+source: "[Placeholder: optional, e.g. where the recipe came from. Delete if not needed.]"
 
 makes:
   verb: makes          # "makes" for biscuits, cakes, loaves; "serves" for meals
@@ -28,6 +29,9 @@ ingredients:
 
 scalingNote: "The oven temperature and baking time stay the same. A bigger batch just needs more trays, or a few rounds in the oven."
 
+equipment:
+  - "[Placeholder: optional, anything non-obvious. Delete if not needed.]"
+
 storage: "[Placeholder: e.g. airtight container at room temperature]"
 keeps: "[Placeholder: e.g. up to 2 weeks]"
 freezing: "[Placeholder: optional, delete if not needed]"
@@ -39,6 +43,6 @@ tips:
 
 1. Combine the oats, sugar, flour and coconut in a large bowl.
 2. Gradually heat the butter and golden syrup in a small pot until melted.
-3. Combine the bicarb and boiling water, then add to the butter mixture.
+3. Combine the bicarb and boiling water, then add to the butter mixture. Watch: [Placeholder: optional pressure point for this step, or delete.]
 4. Stir the butter mixture into the dry ingredients while still warm.
 5. Spoon out onto trays and bake at 150°C for 20 minutes. [Placeholder: lined or greased trays? How far apart? How big a spoonful? Cool on the tray or a rack?]
