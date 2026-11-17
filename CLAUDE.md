@@ -35,6 +35,12 @@ Dee is learning to build and run this site and isn't a developer. Explain the *w
   - Cookbooks from other countries: check which system the book uses; ask if it isn't stated.
 - **Oven temperatures**: assume Dee's numbers are fan-forced (the site default) unless she says otherwise. Set `ovenType: conventional` only when the source says so.
 - **Flour**: if a recipe says sifted, add `sifted: true` (it uses the lighter ~125 g/cup weight). If unclear, ask.
+- **Dee's recipe writing style** (from her commercial recipe-writing experience):
+  - Each step is a short, clear sentence. Easy to follow while multitasking.
+  - Flag pressure points and things to watch for, briefly. Never turn a step into a paragraph.
+  - No life story. The intro is one or two sentences at most: people came for the recipe.
+  - Old recipes (e.g. her grandmother's books) are updated with proper testing and full instructions, and adjusted for modern ingredients (produce, chickens etc. are different sizes now; commercial tomatoes are sweeter). Never invent those adjustments: Dee supplies them after testing.
+  - Published cookbook recipes are never copied. What gets published is Dee's own adapted version (her margin notes and changes), in her words.
 - The build refuses published recipes that still contain placeholders, unknown tags or non-number amounts. Don't weaken these checks to get a build through: fix the recipe.
 
 ## Files
