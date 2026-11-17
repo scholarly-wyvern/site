@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Scholar's Wyvern personal site",
   "scripts": {
-    "build": "eleventy",
+    "build": "eleventy && node scripts/make-cards.js",
     "start": "eleventy --serve",
-    "preview": "SHOW_DRAFTS=1 eleventy --serve"
+    "preview": "SHOW_DRAFTS=1 eleventy --serve",
+    "cards": "node scripts/make-cards.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,9 @@
   },
   "homepage": "https://github.com/scholarly-wyvern/site#readme",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.8"
+    "@11ty/eleventy": "^3.1.8",
+    "playwright-core": "^1.65.1",
+    "qrcode": "^1.5.4"
   },
   "private": true,
   "type": "module"

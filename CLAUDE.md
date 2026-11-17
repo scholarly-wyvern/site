@@ -9,6 +9,8 @@ Dee is learning to build and run this site and isn't a developer. Explain the *w
 - Shared header/footer: `src/_includes/layouts/base.njk`. Nav and site settings: `src/_data/site.json`.
 - Reusable pieces live in `src/_includes/components/` (e.g. `quill-tip.njk`).
 - Check every change with `npm run build` (published view) and `SHOW_DRAFTS=1 npm run build` (includes drafts).
+- **Recipe cards** (10×15 cm, two-sided): `src/_includes/components/recipe-card.njk`, fitted and printed by `src/js/card.js`. After Eleventy builds, `scripts/make-cards.js` photographs each card into `card-front.jpg` / `card-back.jpg` for photo printing (added 2026-11-17: photo services print images, not web pages). It uses `playwright-core` with the Chrome already installed on GitHub's computers (no browser download), and warns if a card's text doesn't fit even at the smallest size.
+- `site.url` in `src/_data/site.json` is used for the QR codes on cards. Update it if the site's address changes (e.g. a custom domain).
 - The plan and decisions live in the claude.ai Project "Scholar's Wyvern Site" (`site-plan.md`, `asset-list.md`).
 - The mascot is a butterfly-winged wyvern called **Quill**.
 

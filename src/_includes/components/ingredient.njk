@@ -1,0 +1,11 @@
+{#- One ingredient line. Used by the recipe page AND the recipe card, so both
+    always show the same thing. The data-… values let the portion calculator
+    and measurement toggle update the amount in the visitor's browser. -#}
+{% macro ingredientLine(i) %}
+{%- set info = i | ingredientInfo %}
+<li{% if i.amount is defined %} data-amount="{{ i.amount }}" data-unit="{{ i.unit }}" data-scale="{{ i.scale or 'scale' }}"{% if info.gPerMl %} data-g-per-ml="{{ info.gPerMl }}"{% endif %}{% if info.liquid %} data-liquid{% endif %}{% endif %}>
+  {% if i.amount is defined %}<span class="ingredient-qty"><span data-qty>{{ i.amount | amount(i.unit) }}</span>{% if i.unit %} <span data-unit-label>{{ i.unit | unitLabel(i.amount) }}</span>{% endif %}</span>{% endif %}
+  <span class="ingredient-item">{{ i.item }}{% if i.sifted %}, sifted{% endif %}</span>
+  {%- if i.note %}<span class="ingredient-note">, {{ i.note | placeholders | safe }}</span>{% endif %}
+</li>
+{% endmacro %}

@@ -6,6 +6,7 @@
 
 import { formatAmount, formatUnit, formatTemperature, SCALE_RULES } from "./src/js/scale.js";
 import recipeTags from "./src/_data/recipeTags.json" with { type: "json" };
+import QRCode from "qrcode";
 import ingredientWeights from "./src/_data/ingredientWeights.json" with { type: "json" };
 
 // Set SHOW_DRAFTS=1 (the "npm run preview" command does) to see draft
@@ -59,6 +60,11 @@ export default function (eleventyConfig) {
     const sharedWeight = ingredient.sifted ? (shared.gPerMlSifted ?? shared.gPerMl) : shared.gPerMl;
     return { gPerMl: ingredient.gPerMl ?? sharedWeight, liquid: ingredient.liquid ?? shared.liquid };
   });
+
+  // A QR code (as an inline SVG drawing) for a web address. Used on the
+  // back of recipe cards so a printed card links to the full recipe.
+  eleventyConfig.addAsyncFilter("qrSvg", async (url) =>
+    QRCode.toString(url, { type: "svg", margin: 0, errorCorrectionLevel: "M" }));
 
   // --- Recipe checks -----------------------------------------------------
   // These run before each recipe is built. If something's wrong, the build

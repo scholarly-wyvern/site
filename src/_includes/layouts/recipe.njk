@@ -6,6 +6,8 @@ layout: layouts/base.njk
     The recipe's own details (title, ingredients…) come from the top of
     its .md file; the method comes from the text underneath. -#}
 {% from "components/quill-tip.njk" import quillTip %}
+{% from "components/ingredient.njk" import ingredientLine %}
+{% from "components/recipe-card.njk" import recipeCard %}
 {%- set ovenType = ovenType or site.defaultOvenType %}
 
 <article class="recipe">
@@ -23,7 +25,7 @@ layout: layouts/base.njk
       {% if draft %}<p class="chip chip--new">Draft: not published</p>{% endif %}
 
       <dl class="recipe-facts">
-        <div><dt>{{ "Makes" if makes.verb == "makes" else "Serves" }}</dt><dd>{{ makes.amount }} {{ makes.unit }}{% if makes.note %} {{ makes.note | placeholders | safe }}{% endif %}</dd></div>
+        <div><dt>{{ "Makes" if makes.verb == "makes" else "Serves" }}</dt><dd><span data-yield>{{ makes.amount }}</span> {{ makes.unit }}{% if makes.note %} {{ makes.note | placeholders | safe }}{% endif %}</dd></div>
         {% if prep %}<div><dt>Prep</dt><dd>{{ prep | placeholders | safe }}</dd></div>{% endif %}
         {% if cook %}<div><dt>Cook</dt><dd>{{ cook | placeholders | safe }}</dd></div>{% endif %}
         {% if oven %}<div><dt>Oven</dt><dd>{{ oven | temperatures(ovenType, true) | safe }}</dd></div>{% endif %}
@@ -35,6 +37,14 @@ layout: layouts/base.njk
         {% for tag in visibleTags %}<li class="chip">{{ recipeTags[tag] }}</li>{% endfor %}
       </ul>
       {% endif %}
+
+      {#- Printing: shown once recipe.js has loaded (the card button needs it) -#}
+      <div class="recipe-print" data-print-tools hidden>
+        <button type="button" class="button-outline" data-print-card>Print recipe card</button>
+        <button type="button" class="button-outline" data-print-page>Print full recipe</button>
+        <p class="recipe-print__photo">For photo printing (10×15 cm, original amounts):
+          <a href="{{ page.url }}card-front.jpg">card front</a> · <a href="{{ page.url }}card-back.jpg">card back</a></p>
+      </div>
     </div>
   </header>
 
@@ -71,14 +81,7 @@ layout: layouts/base.njk
       {% for group in ingredients %}
         {% if group.group %}<h3>{{ group.group }}</h3>{% endif %}
         <ul class="ingredient-list">
-          {% for i in group.items %}
-          {%- set info = i | ingredientInfo %}
-          <li{% if i.amount is defined %} data-amount="{{ i.amount }}" data-unit="{{ i.unit }}" data-scale="{{ i.scale or 'scale' }}"{% if info.gPerMl %} data-g-per-ml="{{ info.gPerMl }}"{% endif %}{% if info.liquid %} data-liquid{% endif %}{% endif %}>
-            {% if i.amount is defined %}<span class="ingredient-qty"><span data-qty>{{ i.amount | amount(i.unit) }}</span>{% if i.unit %} <span data-unit-label>{{ i.unit | unitLabel(i.amount) }}</span>{% endif %}</span>{% endif %}
-            <span class="ingredient-item">{{ i.item }}{% if i.sifted %}, sifted{% endif %}</span>
-            {%- if i.note %}<span class="ingredient-note">, {{ i.note | placeholders | safe }}</span>{% endif %}
-          </li>
-          {% endfor %}
+          {% for i in group.items %}{{ ingredientLine(i) }}{% endfor %}
         </ul>
       {% endfor %}
 
@@ -113,5 +116,14 @@ layout: layouts/base.njk
     </section>
   </div>
 </article>
+
+{#- The recipe card (hidden on screen) -#}
+{%- set methodHtml = content | watchCallouts | placeholders | temperatures(ovenType) %}
+{%- set cardUrl = site.url + page.url %}
+{{ recipeCard({
+  title: title, makes: makes, prep: prep, cook: cook, oven: oven, ovenType: ovenType,
+  ingredients: ingredients, equipment: equipment, method: methodHtml,
+  qr: (cardUrl | qrSvg) if site.url else ""
+}) }}
 
 <script type="module" src="/js/recipe.js"></script>

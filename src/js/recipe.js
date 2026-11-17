@@ -5,6 +5,15 @@
 // only adds the controls and redoes the amounts when someone changes them.
 
 import { scaleAmount, formatAmount, formatUnit, convertAmount, formatTemperature } from "./scale.js";
+import { printRecipeCard } from "./card.js";
+
+// Print buttons. The card version prints only the 10×15 cm card.
+const printTools = document.querySelector("[data-print-tools]");
+if (printTools) {
+  printTools.querySelector("[data-print-card]").addEventListener("click", printRecipeCard);
+  printTools.querySelector("[data-print-page]").addEventListener("click", () => window.print());
+  printTools.hidden = false;
+}
 
 const calc = document.querySelector("[data-portion-calc]");
 
@@ -55,6 +64,9 @@ if (calc) {
         if (unitEl) unitEl.textContent = formatUnit(unit, scaled);
       }
     }
+
+    // "Makes 24" on the page and on the card follows the calculator too
+    for (const el of document.querySelectorAll("[data-yield]")) el.textContent = target;
 
     for (const temp of temperatures) {
       temp.textContent = formatTemperature(Number(temp.dataset.tempC), ovenType, view, temp.hasAttribute("data-temp-detailed"));

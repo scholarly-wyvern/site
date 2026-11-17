@@ -1,0 +1,44 @@
+{#- The printable recipe card: 10×15 cm (4×6 in) landscape, two-sided.
+    Front: title, quick facts, ingredients. Back: method + QR code back to
+    the full recipe page. Hidden on screen; shown only when printing the
+    card, or when the publish step photographs it for photo printing.
+    Uses the same ingredient lines as the page, so the visitor's portions
+    and measurement choice carry over when they print. -#}
+{% from "components/ingredient.njk" import ingredientLine %}
+{% macro recipeCard(r) %}
+<section class="recipe-card" data-recipe-card aria-hidden="true">
+  <div class="rc-face rc-front" data-card-face="front">
+    <div class="rc-fit">
+      <h2 class="rc-title">{{ r.title }}</h2>
+      <p class="rc-meta">
+        {{ "Makes" if r.makes.verb == "makes" else "Serves" }} <span data-yield>{{ r.makes.amount }}</span> {{ r.makes.unit }}
+        {%- if r.prep %} · Prep {{ r.prep | placeholders | safe }}{% endif %}
+        {%- if r.cook %} · Cook {{ r.cook | placeholders | safe }}{% endif %}
+        {%- if r.oven %} · {{ r.oven | temperatures(r.ovenType) | safe }}{% endif %}
+      </p>
+      {% for group in r.ingredients %}
+        {% if group.group %}<h3 class="rc-group">{{ group.group }}</h3>{% endif %}
+        <ul class="rc-ingredients">
+          {% for i in group.items %}{{ ingredientLine(i) }}{% endfor %}
+        </ul>
+      {% endfor %}
+      {% if r.equipment and r.equipment | length %}
+      <p class="rc-equipment"><strong>You'll need:</strong> {{ r.equipment | join(", ") | placeholders | safe }}</p>
+      {% endif %}
+    </div>
+    <p class="rc-brand"><span aria-hidden="true">✦</span> Scholar's Wyvern</p>
+  </div>
+
+  <div class="rc-face rc-back" data-card-face="back">
+    <div class="rc-fit rc-method">
+      {{ r.method | safe }}
+    </div>
+    {% if r.qr %}
+    <div class="rc-qr">
+      {{ r.qr | safe }}
+      <p>Full recipe, conversions &amp; tips</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endmacro %}
