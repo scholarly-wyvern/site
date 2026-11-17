@@ -4,7 +4,7 @@
 // recipe still works if JavaScript fails or is switched off. This script
 // only adds the controls and redoes the amounts when someone changes them.
 
-import { scaleAmount, formatAmount, formatUnit, convertAmount, toFahrenheit } from "./scale.js";
+import { scaleAmount, formatAmount, formatUnit, convertAmount, formatTemperature } from "./scale.js";
 
 const calc = document.querySelector("[data-portion-calc]");
 
@@ -21,6 +21,7 @@ function saveChoice(value) {
 if (calc) {
   const base = Number(calc.dataset.base);
   const from = calc.dataset.measures; // the system the recipe was written in
+  const ovenType = calc.dataset.oven; // "fan" or "conventional"
   const input = calc.querySelector("#portion-yield");
   const scaleNote = calc.querySelector("[data-scale-note]");
   const convertNote = calc.querySelector("[data-convert-note]");
@@ -56,8 +57,7 @@ if (calc) {
     }
 
     for (const temp of temperatures) {
-      const c = Number(temp.dataset.tempC);
-      temp.textContent = view === "us" ? `${toFahrenheit(c)}°F` : `${c}°C`;
+      temp.textContent = formatTemperature(Number(temp.dataset.tempC), ovenType, view, temp.hasAttribute("data-temp-detailed"));
     }
 
     // Notes only appear when they apply

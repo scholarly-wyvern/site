@@ -769,3 +769,42 @@ mark.placeholder {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
+
+/* --- Recipes: storing ------------------------------------------------------ */
+.recipe-storage {
+  margin-top: var(--space-12);
+}
+
+.recipe-storage dl {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.recipe-storage dl div {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+@media (max-width: 600px) {
+  .recipe-storage dl div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.recipe-storage dt {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.recipe-storage dd {
+  margin: 0;
+}

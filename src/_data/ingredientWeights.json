@@ -1,25 +1,77 @@
 {
-  "_about": "How heavy common ingredients are, so cups and spoons can be converted to grams (Metric view) and grams to cups (US view). gPerMl = grams per millilitre, from standard Australian kitchen tables (e.g. 1 cup plain flour = 150 g). liquid = shown in ml, not grams. Names must match the ingredient's 'item' exactly (lowercase). A recipe can also give its own value with gPerMl on the ingredient line. These are approximate: weighing once and adding your own value is always better.",
-  "butter": { "gPerMl": 0.96 },
-  "flour": { "gPerMl": 0.6 },
-  "plain flour": { "gPerMl": 0.6 },
-  "self-raising flour": { "gPerMl": 0.6 },
-  "sugar": { "gPerMl": 0.88 },
-  "caster sugar": { "gPerMl": 0.88 },
-  "brown sugar": { "gPerMl": 0.8 },
-  "icing sugar": { "gPerMl": 0.6 },
-  "oats": { "gPerMl": 0.36 },
-  "rolled oats": { "gPerMl": 0.36 },
-  "coconut": { "gPerMl": 0.3 },
-  "desiccated coconut": { "gPerMl": 0.3 },
-  "golden syrup": { "gPerMl": 1.4 },
-  "honey": { "gPerMl": 1.4 },
-  "cocoa": { "gPerMl": 0.4 },
-  "rice": { "gPerMl": 0.8 },
-  "water": { "liquid": true },
-  "boiling water": { "liquid": true },
-  "milk": { "liquid": true },
-  "oil": { "liquid": true },
-  "olive oil": { "liquid": true },
-  "stock": { "liquid": true }
+  "_about": "How heavy common ingredients are, so cups and spoons can be converted to grams (Metric view) and grams to cups (US view). gPerMl = grams per millilitre (1 Australian cup = 250 ml, so 0.6 = 150 g per cup). gPerMlSifted = the lighter weight used when an ingredient line says sifted: true. liquid = shown in ml, not grams. Names must match the ingredient's 'item' exactly (lowercase). A recipe can also give its own value with gPerMl on the ingredient line. Values are approximate: the weight of a cup depends on how it's filled. Flour: 150 g per cup is the Australian Women's Weekly standard (unsifted); sifted or spooned flour is lighter, about 125 g. Weighing your own cup once and recording it here is always best.",
+  "butter": {
+    "gPerMl": 0.96
+  },
+  "flour": {
+    "gPerMl": 0.6,
+    "gPerMlSifted": 0.5
+  },
+  "plain flour": {
+    "gPerMl": 0.6,
+    "gPerMlSifted": 0.5
+  },
+  "self-raising flour": {
+    "gPerMl": 0.6,
+    "gPerMlSifted": 0.5
+  },
+  "sugar": {
+    "gPerMl": 0.88
+  },
+  "caster sugar": {
+    "gPerMl": 0.88
+  },
+  "brown sugar": {
+    "gPerMl": 0.8
+  },
+  "icing sugar": {
+    "gPerMl": 0.6,
+    "gPerMlSifted": 0.5
+  },
+  "oats": {
+    "gPerMl": 0.36
+  },
+  "rolled oats": {
+    "gPerMl": 0.36
+  },
+  "coconut": {
+    "gPerMl": 0.32
+  },
+  "desiccated coconut": {
+    "gPerMl": 0.35
+  },
+  "golden syrup": {
+    "gPerMl": 1.4
+  },
+  "honey": {
+    "gPerMl": 1.4
+  },
+  "cocoa": {
+    "gPerMl": 0.4,
+    "gPerMlSifted": 0.35
+  },
+  "rice": {
+    "gPerMl": 0.8
+  },
+  "water": {
+    "liquid": true
+  },
+  "boiling water": {
+    "liquid": true
+  },
+  "milk": {
+    "liquid": true
+  },
+  "oil": {
+    "liquid": true
+  },
+  "olive oil": {
+    "liquid": true
+  },
+  "stock": {
+    "liquid": true
+  },
+  "shredded coconut": {
+    "gPerMl": 0.32
+  }
 }

@@ -176,3 +176,27 @@ export function convertAmount(value, unit, from, view, info = {}) {
 export function toFahrenheit(celsius) {
   return Math.round((celsius * 9) / 5 / 25 + 32 / 25) * 25;
 }
+
+// Oven temperatures, written for the reader's oven.
+//   ovenType: what the recipe's number is for ("fan" or "conventional").
+//   Fan-forced runs about 20°C hotter, so conventional = fan + 20°C.
+//   US view: US home ovens are usually conventional, so that's the main
+//   number; "convection" is the US name for fan-forced.
+//   detailed: true for the Oven line at the top (shows both oven types),
+//   false inside the method text (one number, so sentences stay readable).
+export const FAN_DIFFERENCE = 20;
+
+export function formatTemperature(celsius, ovenType = "fan", view = "original", detailed = false) {
+  const isFan = ovenType === "fan";
+  const fan = isFan ? celsius : celsius - FAN_DIFFERENCE;
+  const conventional = isFan ? celsius + FAN_DIFFERENCE : celsius;
+
+  if (view === "us") {
+    const main = `${toFahrenheit(conventional)}°F`;
+    return detailed ? `${main} · ${toFahrenheit(fan)}°F convection` : main;
+  }
+
+  const main = `${celsius}°C ${isFan ? "fan-forced" : "conventional"}`;
+  if (!detailed) return main;
+  return `${main} · ${isFan ? `${conventional}°C conventional` : `${fan}°C fan-forced`}`;
+}

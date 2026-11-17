@@ -4,7 +4,7 @@
 // and writes the finished website into _site/. Visitors only ever see
 // _site/ (GitHub builds it for us), so never edit files in _site/ by hand.
 
-import { formatAmount, formatUnit, SCALE_RULES } from "./src/js/scale.js";
+import { formatAmount, formatUnit, formatTemperature, SCALE_RULES } from "./src/js/scale.js";
 import recipeTags from "./src/_data/recipeTags.json" with { type: "json" };
 import ingredientWeights from "./src/_data/ingredientWeights.json" with { type: "json" };
 
@@ -32,17 +32,22 @@ export default function (eleventyConfig) {
     return text.replace(/\[Placeholder:[^\]]*\]/g, (match) => `<mark class="placeholder">${match}</mark>`);
   });
 
-  // Marks oven temperatures ("150°C") so the US view can show °F instead
-  eleventyConfig.addFilter("temperatures", (text) => {
+  // Marks oven temperatures ("150°C") so they can be shown for the reader's
+  // oven: fan-forced or conventional, °C or °F. "detailed" shows both oven
+  // types (used for the Oven line at the top of a recipe).
+  eleventyConfig.addFilter("temperatures", (text, ovenType = "fan", detailed = false) => {
     if (typeof text !== "string") return text;
-    return text.replace(/(\d{2,3})\s?°C/g, '<span data-temp-c="$1">$1°C</span>');
+    return text.replace(/(\d{2,3})\s?°C(?:\s+(?:fan-forced|fan|conventional))?/g, (match, c) =>
+      `<span data-temp-c="${c}"${detailed ? " data-temp-detailed" : ""}>${formatTemperature(Number(c), ovenType, "original", detailed)}</span>`);
   });
 
   // How heavy an ingredient is, for the measurement toggle. A value on the
   // ingredient line wins over the shared table in ingredientWeights.json.
   eleventyConfig.addFilter("ingredientInfo", (ingredient) => {
     const shared = ingredientWeights[(ingredient.item || "").toLowerCase()] ?? {};
-    return { gPerMl: ingredient.gPerMl ?? shared.gPerMl, liquid: ingredient.liquid ?? shared.liquid };
+    // Sifted ingredients are lighter per cup, so use the sifted weight if known
+    const sharedWeight = ingredient.sifted ? (shared.gPerMlSifted ?? shared.gPerMl) : shared.gPerMl;
+    return { gPerMl: ingredient.gPerMl ?? sharedWeight, liquid: ingredient.liquid ?? shared.liquid };
   });
 
   // --- Recipe checks -----------------------------------------------------
@@ -58,6 +63,10 @@ export default function (eleventyConfig) {
 
     if (typeof data.makes?.amount !== "number") {
       problems.push('"makes: amount" must be a number, e.g. 4');
+    }
+
+    if (data.ovenType && !["fan", "conventional"].includes(data.ovenType)) {
+      problems.push('"ovenType" must be fan or conventional');
     }
 
     if (data.measures && !["au", "us", "metric"].includes(data.measures)) {
@@ -83,7 +92,7 @@ export default function (eleventyConfig) {
 
     if (!data.draft) {
       const text = JSON.stringify([data.title, data.description, data.makes, data.prep, data.cook,
-        data.ingredients, data.scalingNote, data.tips]) + content;
+        data.ingredients, data.scalingNote, data.tips, data.storage, data.keeps, data.freezing]) + content;
       if (text.includes("[Placeholder")) {
         problems.push('it still has "[Placeholder: …]" text. Fill those in or delete them, or set "draft: true"');
       }

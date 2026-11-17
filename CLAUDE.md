@@ -29,6 +29,12 @@ Dee is learning to build and run this site and isn't a developer. Explain the *w
 - One file per recipe in `src/recipes/`, laid out by `src/_includes/layouts/recipe.njk`. Copy `src/recipes/_recipe-template.md` to start one; it explains every field.
 - When Dee shares a recipe from her notes: keep her wording and amounts, tidy only lightly, and mark every gap as `[Placeholder: …]`. Never invent amounts, times or tips and present them as hers. New recipes start as `draft: true`.
 - Amounts must be numbers (0.75, not ¾). Tags must come from `src/_data/recipeTags.json`.
+- **Measuring system (`measures:`)**: always check the source.
+  - Dee's own handwritten notebooks: Australian (`au`: 250 ml cup, 20 ml tablespoon).
+  - Her grandmother's handwritten book: early entries are imperial, later ones (after 1966) metric. Check each entry, and ask Dee if unclear. Imperial isn't supported by the converter yet: add it when the first imperial recipe arrives.
+  - Cookbooks from other countries: check which system the book uses; ask if it isn't stated.
+- **Oven temperatures**: assume Dee's numbers are fan-forced (the site default) unless she says otherwise. Set `ovenType: conventional` only when the source says so.
+- **Flour**: if a recipe says sifted, add `sifted: true` (it uses the lighter ~125 g/cup weight). If unclear, ask.
 - The build refuses published recipes that still contain placeholders, unknown tags or non-number amounts. Don't weaken these checks to get a build through: fix the recipe.
 
 ## Files

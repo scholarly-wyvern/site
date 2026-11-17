@@ -23,6 +23,7 @@ makes:
 prep: 15 min           # optional
 cook: 30 min           # optional
 oven: 180°C            # optional
+ovenType: fan          # optional: fan (the default) or conventional
 measures: au           # au / us / metric: which cups and spoons the recipe uses (Australian tbsp = 20 ml)
 
 # Tags must come from the list in src/_data/recipeTags.json
@@ -34,6 +35,8 @@ tags: [mains, vegetarian]
 #   scale (default, can be left out): multiplied normally
 #   whole: rounded to a whole number, e.g. eggs
 #   none:  never changes, e.g. a pinch of salt
+# Add "sifted: true" to flour (or icing sugar, cocoa) measured after sifting:
+# it shows "sifted" and uses the lighter weight for conversions.
 # Leave "amount" out entirely for things like "salt and pepper, to taste".
 # Unit conversions use the weights in src/_data/ingredientWeights.json. For an
 # ingredient that isn't listed, add gPerMl (grams per ml), e.g. gPerMl: 0.6
@@ -48,6 +51,12 @@ ingredients:
 
 # Shown when someone changes the portions: what doesn't scale simply
 scalingNote: "Use a bigger pan for a double batch. Cooking time stays about the same."
+
+# Storing: all optional. Leave out any you don't need; if all three are
+# left out, the "Storing" section doesn't appear on the page at all.
+storage: "Airtight container at room temperature."
+keeps: "Up to a week."
+freezing: "Freezes well for up to 3 months."
 
 # Quill's tips: one or two at most
 tips:

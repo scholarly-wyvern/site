@@ -10,7 +10,7 @@ makes:
   note: "[Placeholder: check how many this makes]"
 prep: "[Placeholder: e.g. 15 min]"
 cook: 20 min
-oven: 150°C
+oven: 150°C            # fan-forced (the site default)
 measures: au           # cups and spoons are Australian (20 ml tablespoon)
 
 tags: [baking, biscuits, vegetarian]
@@ -22,14 +22,19 @@ ingredients:
       - { amount: 1, unit: cup, item: oats }
       - { amount: 1, unit: cup, item: flour }
       - { amount: 1, unit: cup, item: sugar }
-      - { amount: 0.75, unit: cup, item: coconut, note: "[Placeholder: desiccated or shredded?]" }
+      - { amount: 0.75, unit: cup, item: shredded coconut }
       - { amount: 1, unit: tsp, item: bicarb, note: "bicarbonate of soda (baking soda)" }
       - { amount: 2, unit: tbsp, item: boiling water }
 
 scalingNote: "The oven temperature and baking time stay the same. A bigger batch just needs more trays, or a few rounds in the oven."
 
+storage: "[Placeholder: e.g. airtight container at room temperature]"
+keeps: "[Placeholder: e.g. up to 2 weeks]"
+freezing: "[Placeholder: optional, delete if not needed]"
+
 tips:
-  - "[Placeholder: Quill's tip, e.g. how to tell when they're done, or chewy vs crunchy.]"
+  - "Can't find shredded coconut? Desiccated coconut works as a 1:1 swap. This recipe is forgiving."
+  - "[Placeholder: optional second tip, e.g. how to tell when they're done, or chewy vs crunchy. Delete if not needed.]"
 ---
 
 1. Combine the oats, sugar, flour and coconut in a large bowl.
