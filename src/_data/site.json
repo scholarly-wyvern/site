@@ -8,7 +8,6 @@
     { "label": "Home", "url": "/" },
     { "label": "D&D", "url": "/dnd/", "soon": true },
     { "label": "Recipes", "url": "/recipes/", "soon": true },
-    { "label": "Books", "url": "/books/", "soon": true },
     { "label": "Crafts", "url": "/crafts/", "soon": true }
   ]
 }
